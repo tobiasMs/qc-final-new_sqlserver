@@ -277,6 +277,9 @@ if (strlen($jamAr) == 5) {
                         <?php echo $stop_date; ?>
                         <?php echo $_POST['shift']; ?>
                     </b> <br><br>
+                    <div class="pull-right">
+                        <a href="pages/cetak/grafik_ulang_stenter.php?awal=<?php echo $_POST['awal']; ?>&akhir=<?php echo $_POST['akhir']; ?>&shift=<?php echo $_POST['gshift']; ?>&order=<?php echo $_POST['order']; ?>" class="btn btn-primary <?php if($_POST['awal']=="") { echo "disabled"; }?>" target="_blank">Cetak</a>
+                    </div>
                 </div>
                 <?php
                 $conditions = [];
@@ -318,7 +321,6 @@ if (strlen($jamAr) == 5) {
 
                 if ($stmt1) {
                 ?>
-
                     <div class="box-body">
                         <table id="example3" class="table table-bordered table-hover table-striped display nowrap" width="100%">
                             <thead class="bg-blue">
