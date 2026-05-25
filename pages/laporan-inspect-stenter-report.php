@@ -305,7 +305,37 @@ if (strlen($jamAr) == 5) {
                 }
 
                 $qryb = "SELECT *,CONVERT(VARCHAR(19),tanggal_buat) tanggal_buat
-                        FROM db_qc.tbl_lap_stenter 
+                            FROM db_qc.tbl_lap_stenter s
+                                LEFT JOIN (SELECT
+                                    t.id_lap_stenter,
+                                    t.id_mesin_stop,
+                                    t.jml_stop1,
+                                    t.jml_stop2,
+                                    t.jml_stop3,
+                                    t.jml_stop4,
+                                    f.nama as dept_mesin_stop1, 
+                                    f2.nama as dept_mesin_stop2, 
+                                    f3.nama as dept_mesin_stop3,
+                                    f4.nama as dept_mesin_stop4,
+                                    r.remarks as remarks1,
+                                    r2.remarks as remarks2,
+                                    r3.remarks as remarks3,
+                                    r4.remarks as remarks4
+                                FROM
+                                    db_qc.tbl_mesin_stop_stenter t
+                                left join db_qc.filter_dept f on
+                                    f.id = t.dept_mesin_stop1
+                                left join db_qc.filter_dept f2 on
+                                    f2.id = t.dept_mesin_stop2
+                                left join db_qc.filter_dept f3 on
+                                    f3.id = t.dept_mesin_stop3
+                                left join db_qc.filter_dept f4 on
+                                    f4.id = t.dept_mesin_stop4
+                                left join db_qc.tbl_remarks_stenter r on r.id = t.remarks1
+                                left join db_qc.tbl_remarks_stenter r2 on r2.id = t.remarks2
+                                left join db_qc.tbl_remarks_stenter r3 on r3.id = t.remarks3
+                                left join db_qc.tbl_remarks_stenter r4 on r4.id = t.remarks4) t 
+                                ON t.id_lap_stenter = s.id 
                         $whereClause 
                         ORDER BY id DESC";
 
@@ -325,30 +355,45 @@ if (strlen($jamAr) == 5) {
                         <table id="example3" class="table table-bordered table-hover table-striped display nowrap" width="100%">
                             <thead class="bg-blue">
                                 <tr>
-                                    <th>No</th>
-                                    <th>No KK</th>
-                                    <th>No Demand</th>
-                                    <th>Langganan</th>
-                                    <th>Buyer</th>
-                                    <th>No Order</th>
-                                    <th>Jenis Kain</th>
-                                    <th>Warna</th>
-                                    <th>No MC</th>
-                                    <th>Bruto</th>
-                                    <th>Roll</th>
-                                    <th>No Hanger</th>
-                                    <th>No Item</th>
-                                    <th>Status</th>
-                                    <th>Catatan</th>
-                                    <th>No PO</th>
-                                    <th>Lebar</th>
-                                    <th>Gramasi</th>
-                                    <th>Operator</th>
-                                    <th>No Warna</th>
-                                    <th>Proses</th>
-                                    <th>Gerobak</th>
-                                    <th>Shift</th>
-                                    <th>Tanggal Buat</th>
+                                    <th rowspan='2'>No</th>
+                                    <th rowspan='2'>No KK</th>
+                                    <th rowspan='2'>No Demand</th>
+                                    <th rowspan='2'>Langganan</th>
+                                    <th rowspan='2'>Buyer</th>
+                                    <th rowspan='2'>No Order</th>
+                                    <th rowspan='2'>Jenis Kain</th>
+                                    <th rowspan='2'>Warna</th>
+                                    <th rowspan='2'>No MC</th>
+                                    <th rowspan='2'>Bruto</th>
+                                    <th rowspan='2'>Roll</th>
+                                    <th rowspan='2'>No Hanger</th>
+                                    <th rowspan='2'>No Item</th>
+                                    <th rowspan='2'>Status</th>
+                                    <th rowspan='2'>Catatan</th>
+                                    <th rowspan='2'>No PO</th>
+                                    <th rowspan='2'>Lebar</th>
+                                    <th rowspan='2'>Gramasi</th>
+                                    <th rowspan='2'>Operator</th>
+                                    <th rowspan='2'>No Warna</th>
+                                    <th rowspan='2'>Proses</th>
+                                    <th rowspan='2'>Gerobak</th>
+                                    <th colspan='12' style="text-align: center;">Mesin Stop</th>
+                                    <th rowspan='2'>Shift</th>
+                                    <th rowspan='2'>Tanggal Buat</th>
+                                </tr>
+                                <tr>
+                                    <th>Dept 1</th>
+                                    <th>Jml Stop 1</th>
+                                    <th>Remarks 1</th>
+                                    <th>Dept 2</th>
+                                    <th>Jml Stop 2</th>
+                                    <th>Remarks 2</th>
+                                    <th>Dept 3</th>
+                                    <th>Jml Stop 3</th>
+                                    <th>Remarks 3</th>
+                                    <th>Dept 4</th>
+                                    <th>Jml Stop 4</th>
+                                    <th>Remarks 4</th>
                                 </tr>
 
 
@@ -419,6 +464,18 @@ if (strlen($jamAr) == 5) {
                                                 <?= htmlspecialchars($row['gerobak']) ?>
                                             </a>
                                         </td>
+                                        <td><?php echo $row['dept_mesin_stop1']; ?></td>
+                                        <td><?php echo $row['jml_stop1']; ?></td>
+                                        <td><?php echo $row['remarks1']; ?></td>
+                                        <td><?php echo $row['dept_mesin_stop2']; ?></td>
+                                        <td><?php echo $row['jml_stop2']; ?></td>
+                                        <td><?php echo $row['remarks2']; ?></td>
+                                        <td><?php echo $row['dept_mesin_stop3']; ?></td>
+                                        <td><?php echo $row['jml_stop3']; ?></td>
+                                        <td><?php echo $row['remarks3']; ?></td>
+                                        <td><?php echo $row['dept_mesin_stop4']; ?></td>
+                                        <td><?php echo $row['jml_stop4']; ?></td>
+                                        <td><?php echo $row['remarks4']; ?></td>
                                         <td><?php echo $row['shift']; ?></td>
                                         <td><?php echo $row['tanggal_buat']; ?></td>
                                     </tr>
